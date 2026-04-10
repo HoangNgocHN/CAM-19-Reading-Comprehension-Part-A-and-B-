@@ -2,12 +2,14 @@
 _DEV-NOTES.md
 _FIX-*.md
 _CHANGELOG-*.md
+DEVLOG.md
+NOTES.md
 
 # IDE and tools
 .vscode/
 .claude/
 
-# Documents (not needed for site)
+# Documents
 *.docx
 *.pptx
 *.txt
@@ -17,14 +19,3 @@ _CHANGELOG-*.md
 
 # Backup .git dirs
 .git.bak/
-
-# Parts not needed
-Part C/
-Part D/
-Part E/
-Part F/
-Part G/
-Part H/
-
-# Root mp3 files (paragraph audio kept in sub-folders)
-/*.mp3
