@@ -17,9 +17,9 @@ var PASSAGE = {
     subtitle: "Cambridge IELTS 19 – Test 3, Passage 2",
     unit: "CAM 19 · Test 3.2",
     grade: "Paragraph F",
-    audioFile: "/Part F/Para F.mp3",
+    audioFile: "../../Part F/Para F.mp3",
     estimatedDuration: null,
-    imageFile: "/Part F/Image-F.jpg",
+    imageFile: "../../Part F/Image-F.jpg",
   },
 
   // ─── Mảng từ ─────────────────────────────────────────────────────────────

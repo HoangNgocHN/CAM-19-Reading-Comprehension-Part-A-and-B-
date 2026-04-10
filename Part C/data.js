@@ -21,9 +21,9 @@ var PASSAGE = {
     subtitle: "Cambridge IELTS 19 – Test 3, Passage 2",
     unit: "CAM 19 · Test 3.2",
     grade: "Paragraph C",
-    audioFile: "/Part C/Para-C.mp3",
+    audioFile: "../../Part C/Para-C.mp3",
     estimatedDuration: null,
-    imageFile: "/Part C/Image-C.jpeg",
+    imageFile: "../../Part C/Image-C.jpeg",
   },
 
   // ─── Mảng từ ─────────────────────────────────────────────────────────────
