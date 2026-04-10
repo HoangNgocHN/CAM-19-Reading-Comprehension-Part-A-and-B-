@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climbing Ladder - CAM 19 - The Global Importance of Wetlands (Para 2)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="game-header">
+        <h1 class="game-title">Climbing Ladder 🧗</h1>
+        <p class="game-subtitle">CAM 19 &bull; The Global Importance of Wetlands &bull; Para 2 &bull; Nouns, Verbs &amp; Adjectives</p>
+    </header>
+
+    <!-- ========== SCORE PANEL ========== -->
+    <div class="score-panel">
+        <div class="score-item">
+            <span class="score-label">Correct</span>
+            <span class="score-value" id="correct-count">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Wrong</span>
+            <span class="score-value" id="wrong-count">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Step</span>
+            <span class="score-value" id="step-count">0 / 22</span>
+        </div>
+    </div>
+
+    <!-- ========== BUTTONS ========== -->
+    <div class="btn-container">
+        <button class="btn btn-primary" onclick="startGame()">🧗 New Game</button>
+    </div>
+
+    <!-- ========== GAME AREA ========== -->
+    <div class="game-area">
+
+        <!-- LEFT: Ladder -->
+        <div class="ladder-container">
+            <div class="ladder-title">Progress</div>
+            <div class="ladder" id="ladder">
+                <!-- Steps rendered by game.js -->
+            </div>
+        </div>
+
+        <!-- RIGHT: Answer Panel -->
+        <div class="answer-panel">
+            <div class="audio-bar">
+                <span class="prompt-text" id="prompt-text">
+                    Click <strong>New Game</strong> to start climbing!
+                </span>
+                <button class="replay-btn" id="replay-btn" onclick="replayCurrentAudio()">🔊</button>
+            </div>
+
+            <div class="choices-label">Choose the correct meaning:</div>
+            <div class="choices-grid" id="choices-grid">
+                <!-- 4 choice buttons rendered by game.js -->
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+    </div>
+
+    <!-- ========== WIN MODAL ========== -->
+    <div class="modal-overlay" id="game-modal">
+        <div class="modal-box">
+            <div class="trophy" id="modal-trophy">🏆</div>
+            <h2 id="modal-title">Victory!</h2>
+            <div class="stats" id="modal-stats"></div>
+            <button class="btn btn-accent" onclick="startGame()">🧗 Play Again</button>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="game-footer">
+        CAM 19 &mdash; The Global Importance of Wetlands &mdash; Para 2 Vocabulary
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+
+</body>
+</html>

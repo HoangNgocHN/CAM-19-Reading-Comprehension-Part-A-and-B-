@@ -1,0 +1,141 @@
+/* =============================================================================
+   Falling Words — style.css  (game-specific only; base styles from SpeedMatch)
+   ============================================================================= */
+
+/* ── Override game-area for falling layout ────────────────────────────────── */
+#game-area {
+  gap: 0;
+  padding: 0;
+  justify-content: flex-start;
+  align-items:     stretch;
+  overflow: hidden;
+}
+
+/* ── Arena: where tokens fall ─────────────────────────────────────────────── */
+#fw-arena {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thin progress bar at top of arena */
+#fw-prog-wrap {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(255,255,255,.05);
+  z-index: 5;
+}
+#fw-prog-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg,#f72585,#e63960);
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+
+/* ── Target definition zone (bottom) ─────────────────────────────────────── */
+#fw-target-wrap {
+  flex-shrink: 0;
+  padding: 14px 28px 20px;
+  background: rgba(255,255,255,.025);
+  border-top: 1px solid rgba(255,255,255,.07);
+  text-align: center;
+}
+
+.fw-target-label {
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.22);
+  margin-bottom: 8px;
+}
+
+#fw-target {
+  font-size: 1.12rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.88);
+  line-height: 1.55;
+  min-height: 2.8em;
+  transition: opacity .2s;
+}
+
+#fw-target.fw-target--loading { opacity: .25; }
+
+#fw-target.fw-target--loading { opacity: .3; }
+
+/* ── Falling tokens ───────────────────────────────────────────────────────── */
+.fw-token {
+  position: absolute;
+  background: linear-gradient(150deg,#182040,#101828);
+  border: 1.5px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: border-color .1s, color .1s, box-shadow .1s;
+  z-index: 2;
+}
+
+.fw-token:hover {
+  border-color: rgba(247,37,133,.5);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(247,37,133,.2);
+}
+
+/* Correct click — bright pink flash */
+.fw-token--hit {
+  border-color: var(--green) !important;
+  background:   rgba(247,37,133,.18) !important;
+  color:        var(--green) !important;
+  box-shadow:   0 0 28px rgba(247,37,133,.5) !important;
+  pointer-events: none;
+  animation: fw-pop .3s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes fw-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Wrong click — red shake, then ghost */
+.fw-token--wrong {
+  border-color:   var(--red) !important;
+  color:          var(--red) !important;
+  pointer-events: none;
+  animation: fw-shake .36s ease forwards;
+}
+
+@keyframes fw-shake {
+  0%,100% { transform: translateX(0); }
+  18%     { transform: translateX(-9px); }
+  36%     { transform: translateX(9px); }
+  55%     { transform: translateX(-5px); }
+  73%     { transform: translateX(5px); }
+}
+
+/* Ghost state after wrong shake */
+.fw-token--ghost {
+  opacity: .22;
+  pointer-events: none;
+  border-color: rgba(255,255,255,.05);
+  color: rgba(255,255,255,.22);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 540px) {
+  .fw-token       { font-size: .82rem; padding: 8px 14px; }
+  #fw-target      { font-size: .95rem; }
+  #fw-target-wrap { padding: 12px 16px 16px; }
+}

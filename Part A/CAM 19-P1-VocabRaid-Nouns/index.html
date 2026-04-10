@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOCAB RAID — Unit 9</title>
+  <link rel="stylesheet" href="vocab-raid.css">
+</head>
+<body>
+
+<!-- FEEDBACK FLASH -->
+<div class="feedback-flash" id="feedbackFlash"></div>
+
+<!-- MODAL (word info) -->
+<div class="modal-backdrop" id="wordModal">
+  <div class="modal-box">
+    <h2 id="modal-word"></h2>
+    <div class="phonetic" id="modal-phonetic"></div>
+    <p id="modal-body" style="margin-top:14px;"></p>
+    <button class="btn-ghost close-btn" onclick="closeModal()">✕ CLOSE</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 1 — TITLE
+     ═══════════════════════════════════════════════ -->
+<div id="screen-title" class="screen active">
+  <div class="game-logo">
+    <div class="unit-tag">Grade 10 · Unit 9 · Concept Nouns</div>
+    <h1>VOCAB<br>RAID</h1>
+    <div class="subtitle">MASTER THE WORDS. DOMINATE THE FIELD.</div>
+  </div>
+
+  <div class="name-box">
+    <label>SOLDIER CALLSIGN</label>
+    <input type="text" id="playerName" placeholder="Enter your name..." maxlength="24" autocomplete="off" />
+  </div>
+
+  <div style="text-align:center;">
+    <div style="font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;">
+      Select Mode
+    </div>
+    <div class="mode-grid" id="modeGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <button class="btn-primary" id="startBtn" onclick="startGame()">▶ DEPLOY</button>
+
+  <div class="divider"></div>
+
+  <div style="text-align:center">
+    <div style="font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;">
+      Vocabulary Index — tap to review
+    </div>
+    <div class="word-index" id="wordIndex"></div>
+  </div>
+
+  <div style="height:40px"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 2 — GAME
+     ═══════════════════════════════════════════════ -->
+<div id="screen-game" class="screen">
+  <div class="hud">
+    <div>
+      <div class="hud-player" id="hudPlayer">PLAYER</div>
+    </div>
+    <div>
+      <div class="hud-score-label">SCORE</div>
+      <div class="hud-score" id="hudScore">0</div>
+    </div>
+    <div>
+      <div class="hud-score-label">COMBO</div>
+      <div class="hud-combo" id="hudCombo">x1</div>
+    </div>
+    <div class="hp-bar-wrap">
+      <div class="hp-bar-label">HP ❤️ <span id="hudHp"></span></div>
+      <div class="hp-bar-track">
+        <div class="hp-bar-fill" id="hpBarFill" style="width:100%"></div>
+      </div>
+    </div>
+    <div class="hud-timer" id="hudTimer"></div>
+  </div>
+  <div class="progress-strip">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+
+  <div class="arena" id="arena">
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNumber"></div>
+      <div class="q-text" id="qText"></div>
+    </div>
+    <div class="choices" id="choices"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 3 — WORD DODGE
+     ═══════════════════════════════════════════════ -->
+<div id="screen-dodge" class="screen">
+
+  <!-- HUD (reuses existing hud classes) -->
+  <div class="hud">
+    <div>
+      <div class="hud-player" id="dodgeHudPlayer">PLAYER</div>
+    </div>
+    <div>
+      <div class="hud-score-label">Q</div>
+      <div class="hud-score" id="dodge-hud-q">1/1</div>
+    </div>
+    <div>
+      <div class="hud-score-label">SCORE</div>
+      <div class="hud-score" id="dodge-hud-score">0</div>
+    </div>
+    <div>
+      <div class="hud-score-label">COMBO</div>
+      <div class="hud-combo" id="dodge-hud-combo">x1</div>
+    </div>
+    <div>
+      <div class="hud-score-label">HP</div>
+      <div id="dodge-hud-hp">❤️❤️❤️❤️❤️</div>
+    </div>
+  </div>
+  <div class="progress-strip">
+    <div class="progress-fill" id="dodge-progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- ARENA -->
+  <div id="dodge-arena">
+
+    <!-- "Q1 — DODGE!" flash -->
+    <div id="dodge-ready" class="dodge-ready-overlay"></div>
+
+    <!-- Falling word -->
+    <div id="dodge-word" class="dodge-falling-word">WORD</div>
+
+    <!-- Player crosshair -->
+    <div id="dodge-player">⚡</div>
+
+    <!-- 4 Answer zones -->
+    <div class="dodge-zone zone-top" id="dodge-zone-up">
+      <div class="zone-key">↑</div>
+      <div class="zone-text">—</div>
+      <div class="zone-enter-label">walk in ↓</div>
+    </div>
+    <div class="dodge-zone zone-bottom" id="dodge-zone-down">
+      <div class="zone-enter-label">walk in ↑</div>
+      <div class="zone-key">↓</div>
+      <div class="zone-text">—</div>
+    </div>
+    <div class="dodge-zone zone-left" id="dodge-zone-left">
+      <div class="zone-key">←</div>
+      <div class="zone-text">—</div>
+      <div class="zone-enter-label">→ in</div>
+    </div>
+    <div class="dodge-zone zone-right" id="dodge-zone-right">
+      <div class="zone-key">→</div>
+      <div class="zone-text">—</div>
+      <div class="zone-enter-label">← in</div>
+    </div>
+
+    <!-- Controls hint -->
+    <div class="dodge-hint">← → ↑ ↓ &nbsp;MOVE&nbsp; • &nbsp;TOUCH THE CORRECT MEANING&nbsp; • &nbsp;ESC = QUIT</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 4 — SPACE RAID
+     ═══════════════════════════════════════════════ -->
+<div id="screen-space" class="screen">
+
+  <!-- HUD (reuses existing hud classes) -->
+  <div class="hud">
+    <div>
+      <div class="hud-player" id="spaceHudPlayer">PLAYER</div>
+    </div>
+    <div>
+      <div class="hud-score-label">Q</div>
+      <div class="hud-score" id="space-hud-q">1/1</div>
+    </div>
+    <div>
+      <div class="hud-score-label">SCORE</div>
+      <div class="hud-score" id="space-hud-score">0</div>
+    </div>
+    <div>
+      <div class="hud-score-label">COMBO</div>
+      <div class="hud-combo" id="space-hud-combo">x1</div>
+    </div>
+    <div>
+      <div class="hud-score-label">HP</div>
+      <div id="space-hud-hp">❤️❤️❤️❤️❤️</div>
+    </div>
+  </div>
+  <div class="progress-strip">
+    <div class="progress-fill" id="space-progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- Word banner -->
+  <div id="space-word-banner">
+    <div class="space-wb-label">DESTROY THE SHIP THAT MEANS</div>
+    <div id="space-wb-word">—</div>
+    <div class="space-timer-track">
+      <div class="space-timer-fill" id="space-timer-fill" style="width:100%"></div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div id="space-canvas-wrap">
+    <canvas id="spaceCanvas" style="touch-action:none; display:block;"></canvas>
+    <div id="space-ready" class="dodge-ready-overlay"></div>
+    <!-- hint overlays the canvas — no flex height consumed -->
+    <div class="dodge-hint" style="bottom:12px;">← → MOVE &nbsp;·&nbsp; SPACE / ↑ FIRE &nbsp;·&nbsp; DESTROY THE CORRECT SHIP &nbsp;·&nbsp; ESC = QUIT</div>
+  </div>
+
+  <!-- Mobile controls -->
+  <div id="space-controls">
+    <button class="space-ctrl-btn"
+            ontouchstart="SpaceGame.left(true)"  ontouchend="SpaceGame.left(false)"
+            onmousedown="SpaceGame.left(true)"   onmouseup="SpaceGame.left(false)">◀</button>
+    <button class="space-ctrl-btn space-fire-btn"
+            ontouchstart="SpaceGame.shoot()" onmousedown="SpaceGame.shoot()">🚀 FIRE</button>
+    <button class="space-ctrl-btn"
+            ontouchstart="SpaceGame.right(true)" ontouchend="SpaceGame.right(false)"
+            onmousedown="SpaceGame.right(true)"  onmouseup="SpaceGame.right(false)">▶</button>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN 5 — RESULTS
+     ═══════════════════════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="results-title" id="resultsTitle">MISSION COMPLETE</div>
+  <div class="rank-badge" id="rankBadge"></div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-val" id="resScore">0</div>
+      <div class="stat-label">TOTAL SCORE</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="resCorrect">0</div>
+      <div class="stat-label">CORRECT</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="resAccuracy">0%</div>
+      <div class="stat-label">ACCURACY</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="resBestCombo">x1</div>
+      <div class="stat-label">BEST COMBO</div>
+    </div>
+  </div>
+
+  <div class="review-list" id="reviewList"></div>
+
+  <div class="result-btns">
+    <button class="btn-primary" onclick="playAgain()">↺ PLAY AGAIN</button>
+    <button class="btn-ghost" onclick="exportSession()">⬇ EXPORT DATA</button>
+    <button class="btn-ghost" onclick="showTitle()">⌂ MENU</button>
+  </div>
+
+  <div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-align:center;max-width:400px">
+    //Session data auto-saved. Use Export to get JSON for tracking/analysis.
+  </div>
+</div>
+
+<!-- MUSIC WIDGET -->
+<div class="music-widget" id="musicWidget">
+  <button class="music-toggle" id="musicToggle" title="Toggle music">
+    <span id="musicIcon">♪</span>
+  </button>
+  <div class="music-volume">
+    <span class="vol-icon" id="volIcon">🔊</span>
+    <input type="range" id="volSlider" min="0" max="100" value="30" class="vol-slider">
+  </div>
+</div>
+
+<script src="vocab-raid.js"></script>
+</body>
+</html>

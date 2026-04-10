@@ -1,0 +1,729 @@
+/* ===================================================
+   STYLE.CSS - Crossword Game
+   Unit 9: Social Issues - Grade 11 - NOUNS (Para B)
+   ===================================================
+   THEME: "Mountain Depths" — Layered SVG landscape
+   - Full-viewport SVG mountain scene (5 depth layers)
+   - Frosted-glass game container
+   - Warm paper-like crossword cells
+   - Amber highlights, green/red feedback
+   =================================================== */
+
+/* ---------- CSS VARIABLES ---------- */
+:root {
+    /* Surface */
+    --glass-bg:      rgba(10, 15, 30, 0.82);
+    --glass-border:  rgba(255, 255, 255, 0.07);
+    --glass-blur:    16px;
+
+    /* Cells */
+    --cell-size:     38px;
+    --cell-bg:       #FFFFFF;
+    --cell-border:   #C8CDD5;
+    --cell-text:     #1E293B;
+    --cell-number:   #64748B;
+
+    /* Highlights */
+    --hl-word:       #FEF3C7;       /* pale amber — selected word */
+    --hl-active:     #FCD34D;       /* gold — active cell */
+    --hl-active-ring:#F59E0B;
+
+    /* Feedback */
+    --correct-bg:    #D1FAE5;
+    --correct-text:  #065F46;
+    --wrong-bg:      #FEE2E2;
+    --wrong-text:    #991B1B;
+    --revealed-bg:   #F1F5F9;
+    --revealed-text: #94A3B8;
+
+    /* Clues */
+    --clue-active:   rgba(245, 158, 11, 0.12);
+    --clue-border:   rgba(245, 158, 11, 0.50);
+
+    /* Accents */
+    --amber:         #F59E0B;
+    --emerald:       #10B981;
+    --sky-top:       #070B24;
+
+    --radius:        14px;
+}
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+    background: var(--sky-top);
+    color: #E2E8F0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   SVG BACKGROUND — Fixed full-screen
+   ============================================ */
+.bg-scene {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-scene svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Star twinkle (dot stars) */
+.star {
+    animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+    0%   { opacity: var(--min-o, 0.3); }
+    100% { opacity: var(--max-o, 0.9); }
+}
+
+/* Sparkle stars (4/6-pointed shapes — opacity + scale + rotation) */
+.sparkle {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation:
+        sparkle-twinkle var(--dur, 4s) ease-in-out infinite alternate,
+        sparkle-rotate calc(var(--dur, 4s) * 3) linear infinite;
+}
+
+@keyframes sparkle-twinkle {
+    0%   { opacity: var(--min-o, 0.15); transform: scale(0.6); }
+    50%  { opacity: var(--max-o, 0.9);  transform: scale(1.1); }
+    100% { opacity: var(--min-o, 0.15); transform: scale(0.7); }
+}
+
+@keyframes sparkle-rotate {
+    0%   { rotate: 0deg; }
+    100% { rotate: 360deg; }
+}
+
+/* Hero sparkles — extra scale pulse */
+.sparkle-hero {
+    animation:
+        sparkle-hero-pulse var(--dur, 6s) ease-in-out infinite,
+        sparkle-rotate calc(var(--dur, 6s) * 2.5) linear infinite;
+}
+
+@keyframes sparkle-hero-pulse {
+    0%   { opacity: var(--min-o, 0.1); transform: scale(0.4); }
+    30%  { opacity: 0.5;               transform: scale(0.8); }
+    50%  { opacity: var(--max-o, 1);    transform: scale(1.2); }
+    70%  { opacity: 0.6;               transform: scale(0.9); }
+    100% { opacity: var(--min-o, 0.1); transform: scale(0.5); }
+}
+
+/* Aurora drift */
+.aurora-path {
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+    0%   { transform: translateX(-15px) scaleY(1); opacity: 0.35; }
+    100% { transform: translateX(15px) scaleY(1.15); opacity: 0.55; }
+}
+
+/* ============================================
+   GAME CONTAINER — Frosted glass
+   ============================================ */
+.game-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ---------- HEADER ---------- */
+.game-header {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.game-title {
+    font-size: 2.4rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #FBBF24, #F59E0B, #D97706);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.3));
+}
+
+.game-subtitle {
+    font-size: 0.82rem;
+    color: #64748B;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* ---------- SCORE PANEL ---------- */
+.score-panel {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 12px 28px;
+    margin-bottom: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+}
+
+.score-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.score-label {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.score-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.score-item:nth-child(1) .score-value { color: var(--emerald); }
+.score-item:nth-child(2) .score-value { color: #EF4444; }
+.score-item:nth-child(3) .score-value { color: var(--amber); }
+
+/* ---------- BUTTONS ---------- */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    transition: all 0.25s ease;
+}
+
+.btn:hover { transform: translateY(-2px); }
+
+.btn-primary {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    color: #1a0a00;
+    box-shadow: 0 3px 14px rgba(245, 158, 11, 0.25);
+}
+
+.btn-check {
+    background: linear-gradient(135deg, #059669, #10B981);
+    color: #fff;
+    box-shadow: 0 3px 14px rgba(16, 185, 129, 0.25);
+}
+
+.btn-reveal {
+    background: rgba(255, 255, 255, 0.06);
+    color: #CBD5E1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-reveal:hover { border-color: rgba(255, 255, 255, 0.2); color: #F1F5F9; }
+
+.btn-clear {
+    background: rgba(255, 255, 255, 0.04);
+    color: #94A3B8;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================
+   CROSSWORD GRID
+   ============================================ */
+.grid-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.crossword-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--cell-size));
+    gap: 2px;
+    outline: none;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+/* ---------- CELLS ---------- */
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+.cell:not(.black) {
+    background: var(--cell-bg);
+    border: 1.5px solid var(--cell-border);
+}
+
+.cell.black {
+    background: transparent;
+    cursor: default;
+    border: none;
+}
+
+.cell-number {
+    position: absolute;
+    top: 1px;
+    left: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--cell-number);
+    line-height: 1;
+    pointer-events: none;
+}
+
+.cell-letter {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--cell-text);
+    text-transform: uppercase;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Highlighted word */
+.cell.highlighted {
+    background: var(--hl-word);
+    border-color: #FBBF24;
+}
+
+/* Active cell */
+.cell.active {
+    background: var(--hl-active);
+    border-color: var(--hl-active-ring);
+    box-shadow: 0 0 0 2px var(--hl-active-ring), 0 0 12px rgba(245, 158, 11, 0.3);
+    z-index: 2;
+}
+
+/* Cursor blink in active cell */
+.cell.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    background: var(--hl-active-ring);
+    border-radius: 1px;
+    animation: cursor-blink 1s step-end infinite;
+}
+
+.cell.active .cell-letter:not(:empty) + .cell-letter { display: none; }
+/* Hide cursor when cell has a letter */
+.cell.active:has(.cell-letter:not(:empty))::after { display: none; }
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+}
+
+/* Correct */
+.cell.correct {
+    background: var(--correct-bg) !important;
+    border-color: #6EE7B7 !important;
+}
+.cell.correct .cell-letter { color: var(--correct-text); }
+
+/* Wrong */
+.cell.wrong {
+    background: var(--wrong-bg) !important;
+    border-color: #FCA5A5 !important;
+    animation: cell-shake 0.35s ease;
+}
+.cell.wrong .cell-letter { color: var(--wrong-text); }
+
+@keyframes cell-shake {
+    0%, 100% { transform: translateX(0); }
+    25%      { transform: translateX(-3px); }
+    50%      { transform: translateX(3px); }
+    75%      { transform: translateX(-2px); }
+}
+
+/* Revealed */
+.cell.revealed {
+    background: var(--revealed-bg) !important;
+    border-color: #CBD5E1 !important;
+}
+.cell.revealed .cell-letter {
+    color: var(--revealed-text);
+    font-style: italic;
+}
+
+/* Word-level correct (Enter check — locked green) */
+.cell.word-correct {
+    background: #D1FAE5 !important;
+    border-color: #34D399 !important;
+    box-shadow: inset 0 0 8px rgba(16, 185, 129, 0.15);
+    pointer-events: none;
+    animation: word-correct-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cell.word-correct .cell-letter {
+    color: #065F46;
+    font-weight: 900;
+}
+.cell.word-correct .cell-number { color: #059669; }
+
+@keyframes word-correct-pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.12); }
+    70%  { transform: scale(0.96); }
+    100% { transform: scale(1); }
+}
+
+/* Word-level wrong (Enter check — red flash + shake) */
+.cell.word-wrong {
+    background: #FEE2E2 !important;
+    border-color: #F87171 !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.25);
+    animation: word-wrong-shake 0.55s ease;
+}
+.cell.word-wrong .cell-letter { color: #991B1B; }
+
+@keyframes word-wrong-shake {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    15%      { transform: translateX(-5px) rotate(-1deg); }
+    30%      { transform: translateX(5px) rotate(1deg); }
+    45%      { transform: translateX(-4px) rotate(-0.5deg); }
+    60%      { transform: translateX(4px) rotate(0.5deg); }
+    75%      { transform: translateX(-2px); }
+    90%      { transform: translateX(2px); }
+}
+
+/* ============================================
+   CLUES
+   ============================================ */
+.clues-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 16px;
+}
+
+.clues-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 16px;
+}
+
+.clues-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clues-title.across-title { color: var(--amber); }
+.clues-title.down-title   { color: var(--emerald); }
+.extra-title               { color: #94A3B8; }
+
+.clue {
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.clue:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.clue.active {
+    background: var(--clue-active);
+    border-left-color: var(--clue-border);
+    color: #F1F5F9;
+}
+
+.clue-num {
+    font-weight: 800;
+    color: #F1F5F9;
+}
+
+.clue-hint {
+    font-size: 0.72rem;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.clue.extra {
+    cursor: default;
+    font-size: 0.82rem;
+}
+
+.clue-word {
+    font-weight: 700;
+    color: #94A3B8;
+}
+
+/* Solved clue (word confirmed correct via Enter) */
+.clue.solved {
+    opacity: 0.5;
+    text-decoration: line-through;
+    text-decoration-color: #34D399;
+    pointer-events: none;
+    border-left-color: #34D399 !important;
+}
+
+.clue.solved .clue-num {
+    color: #34D399;
+}
+
+/* ============================================
+   ON-SCREEN KEYBOARD
+   ============================================ */
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 540px;
+}
+
+.kb-row {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+}
+
+.kb-key {
+    width: 34px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #E2E8F0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kb-key:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.kb-key:active {
+    background: var(--amber);
+    color: #1a0a00;
+    transform: scale(0.95);
+}
+
+.kb-key.kb-wide {
+    width: 56px;
+    font-size: 1.1rem;
+}
+
+.kb-key.kb-enter {
+    width: 56px;
+    background: linear-gradient(135deg, #059669, #10B981);
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.kb-key.kb-enter:active {
+    background: #34D399;
+    color: #065F46;
+}
+
+/* ============================================
+   WIN MODAL
+   ============================================ */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 11, 36, 0.9);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+.modal-box {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(10, 15, 30, 0.98));
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 20px;
+    padding: 40px 36px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(245, 158, 11, 0.1);
+    animation: modal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modal-pop {
+    0%   { transform: scale(0.7) translateY(30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0);       opacity: 1; }
+}
+
+.modal-trophy {
+    font-size: 3.5rem;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.4));
+}
+
+.modal-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #FBBF24, #F59E0B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+}
+
+.modal-stars {
+    font-size: 2rem;
+    letter-spacing: 8px;
+    margin-bottom: 16px;
+}
+
+.star-on {
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.5));
+    animation: star-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+.star-off { opacity: 0.2; filter: grayscale(1); }
+.star-on:nth-child(1) { animation-delay: 0.2s; }
+.star-on:nth-child(2) { animation-delay: 0.4s; }
+.star-on:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes star-pop {
+    0%   { transform: scale(0) rotate(-90deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0);       opacity: 1; }
+}
+
+.modal-stats {
+    color: #94A3B8;
+    font-size: 0.9rem;
+    line-height: 2.2;
+    margin-bottom: 20px;
+}
+.modal-stats span {
+    color: var(--amber);
+    font-weight: 700;
+}
+
+.btn-play-again {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    color: #1a0a00;
+    padding: 12px 32px;
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+}
+
+/* ============================================
+   CONFETTI
+   ============================================ */
+.confetti {
+    position: fixed;
+    top: -10px;
+    z-index: 300;
+    pointer-events: none;
+    animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+    0%   { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.game-footer {
+    text-align: center;
+    padding: 16px;
+    color: #475569;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+    opacity: 0.5;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    :root { --cell-size: 32px; }
+    .game-title { font-size: 1.6rem; }
+    .score-panel { gap: 14px; padding: 10px 16px; }
+    .score-value { font-size: 1.1rem; }
+    .clues-container { grid-template-columns: 1fr; }
+    .btn-row { gap: 6px; }
+    .btn { padding: 8px 14px; font-size: 0.72rem; }
+}
+
+@media (max-width: 480px) {
+    :root { --cell-size: 28px; }
+    .game-container { padding: 12px 8px 30px; }
+    .game-title { font-size: 1.3rem; }
+    .grid-wrapper { padding: 10px; }
+    .cell-number { font-size: 7px; }
+    .cell-letter { font-size: 13px; }
+    .kb-key { width: 28px; height: 36px; font-size: 0.75rem; }
+    .kb-key.kb-wide { width: 46px; }
+    .clue { font-size: 0.78rem; }
+}

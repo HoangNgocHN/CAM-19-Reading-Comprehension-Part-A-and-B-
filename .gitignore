@@ -1,0 +1,30 @@
+# Notes and dev files
+_DEV-NOTES.md
+_FIX-*.md
+_CHANGELOG-*.md
+
+# IDE and tools
+.vscode/
+.claude/
+
+# Documents (not needed for site)
+*.docx
+*.pptx
+*.txt
+
+# Temp files
+~$*
+
+# Backup .git dirs
+.git.bak/
+
+# Parts not needed
+Part C/
+Part D/
+Part E/
+Part F/
+Part G/
+Part H/
+
+# Root mp3 files (paragraph audio kept in sub-folders)
+/*.mp3

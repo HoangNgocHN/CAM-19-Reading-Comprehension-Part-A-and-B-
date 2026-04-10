@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+  index.html — Reading & Listening Activities · CAM 19 · Test 3.2
+  ==================================================================================
+
+  CẤU TRÚC FILE:
+    #app-header       → tên activity + badge đơn vị + paragraph tabs (A-H)
+    .mode-tabs        → thanh chọn mode (thêm mode mới vào đây)
+    #text-display     → vùng hiển thị bài đọc (được render động bởi logic.js)
+    .player           → audio player cố định ở dưới cùng
+
+  ĐỂ THÊM PARAGRAPH MỚI:
+    → Chỉ cần thêm entry vào paragraphs.js. File này không cần sửa.
+
+  ĐỂ THÊM MODE MỚI:
+    1. Thêm <button class="mode-tab" data-mode="tên-mode">Tên Mode</button> vào .mode-tabs
+    2. Đăng ký ModeClass trong logic.js: ModeManager.register("tên-mode", MyClass)
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAM 19 · Wetlands — Activities</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=19">
+</head>
+<body>
+
+  <!-- ── App Header ───────────────────────────────────────────────────────── -->
+  <header class="app-header">
+    <span class="app-header__badge">CAM 19 · Test 3.2</span>
+    <span class="app-header__title">Reading &amp; Listening Activities</span>
+
+    <!-- Paragraph tabs — populated by ParagraphManager in logic.js -->
+    <nav class="para-tabs" id="para-tabs" role="tablist" aria-label="Paragraph selector"></nav>
+
+    <button
+      id="btn-analytics"
+      class="player__btn player__btn--ghost"
+      style="color:#fff; border-color:rgba(255,255,255,.35);"
+      title="Show learning analytics"
+    >📊 Stats</button>
+  </header>
+
+  <!-- ── Mode Tabs ──────────────────────────────────────────────────────────── -->
+  <nav class="mode-tabs" role="tablist" aria-label="Activity modes">
+    <button class="mode-tab" data-mode="vocab" role="tab">📚 Vocab</button>
+    <button class="mode-tab mode-tab--active" data-mode="karaoke" role="tab">🎵 Read-Along</button>
+    <button class="mode-tab" data-mode="fill-blank" role="tab">✏️ Fill in the Blank</button>
+    <button class="mode-tab" data-mode="tfng" role="tab">✅ True / False / NG</button>
+    <button class="mode-tab" data-mode="gapfill" role="tab">📝 Gap-Fill</button>
+    <button class="mode-tab" data-mode="mcq" role="tab">🔵 Multiple Choice</button>
+    <button class="mode-tab" data-mode="scanning" role="tab">🔍 Info Scanning</button>
+  </nav>
+
+  <!-- ── Main Content ───────────────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- Calibration banner -->
+    <div id="calib-banner" hidden role="alert">
+      <div class="calib-header">
+        <strong>⏱ Sync Audio</strong>
+        <span class="calib-step">Câu <span id="calib-progress">1 / 4</span></span>
+      </div>
+      <p class="calib-instruction">
+        Nhấn <strong>Play</strong>, rồi bấm <kbd>Mark</kbd> đúng lúc câu sau bắt đầu được đọc:
+      </p>
+      <p class="calib-target">→ <strong id="calib-word-target">—</strong></p>
+      <div class="calib-actions">
+        <button class="calib-btn calib-btn--mark" id="btn-calib-mark" disabled>✋ Mark</button>
+        <button class="calib-btn calib-btn--done"  id="btn-calib-done">✓ Xong sớm</button>
+        <button class="calib-btn calib-btn--reset" id="btn-calib-reset">↺ Huỷ</button>
+      </div>
+    </div>
+    <p id="calib-done-msg" hidden style="color:#16a34a;font-weight:600;margin-bottom:12px;">
+      ✓ Đã lưu sync! Karaoke sẽ khớp hơn từ bây giờ.
+    </p>
+
+    <!-- Loading indicator (shown while switching paragraphs) -->
+    <div id="para-loading" hidden style="padding:32px;text-align:center;color:var(--clr-text-muted);font-size:.9rem;">
+      ⏳ Loading paragraph…
+    </div>
+
+    <!-- Passage text rendered here -->
+    <div id="text-display" aria-live="polite" aria-label="Reading passage"></div>
+
+    <!-- Analytics panel -->
+    <div id="analytics-panel" hidden aria-label="Learning analytics"></div>
+
+  </main>
+
+  <!-- ── Sticky Audio Player ───────────────────────────────────────────────── -->
+  <div class="player" role="region" aria-label="Audio player">
+    <div class="player__inner">
+      <div class="player__seek-wrap">
+        <span id="time-current" class="player__time-cur">0:00</span>
+        <div class="player__seek-track">
+          <input type="range" id="seek-slider" class="seek-slider"
+                 min="0" max="1000" value="0" step="1" aria-label="Seek audio position">
+          <div id="seek-tooltip" class="seek-tooltip" hidden>0:00</div>
+        </div>
+        <span id="time-duration" class="player__time-dur">0:00</span>
+      </div>
+      <div class="player__controls">
+        <button id="btn-back5" class="player__btn player__btn--sm"
+                aria-label="Back 5 seconds" title="Back 5 seconds">⟨5</button>
+        <button id="btn-play" class="player__btn" aria-label="Play" title="Play / Pause">▶</button>
+        <button id="btn-speed" class="player__btn player__btn--ghost"
+                aria-label="Playback speed" title="Change speed">1×</button>
+        <span class="player__spacer"></span>
+        <button id="btn-calib-start" class="player__btn player__btn--ghost"
+                aria-label="Calibrate word timing" title="Sync word timing to audio">
+          ⏱ Calibrate
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden audio element -->
+  <audio id="main-audio" preload="metadata"></audio>
+
+  <!-- Vocab iframe overlay -->
+  <div id="vocab-overlay" hidden>
+    <div class="vocab-shell">
+      <iframe id="vocab-iframe" src="" title="Vocab activity" allowfullscreen></iframe>
+    </div>
+    <button id="vocab-iframe-close" class="vocab-iframe-close" title="Close">✕ Back</button>
+  </div>
+
+  <!-- Scripts: paragraphs config → vocab config → actual test data → data (Para A default) → logic -->
+  <script src="paragraphs.js?v=19"></script>
+  <script src="vocab-data.js?v=19"></script>
+  <script src="actual-test-data.js?v=19"></script>
+  <script src="data.js?v=19"></script>
+  <script src="logic.js?v=19"></script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listen & Match - CAM 19 Test 3.2: Wetlands (N/V/Adj)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="game-header">
+        <h1 class="game-title">Listen & Match</h1>
+        <p class="game-subtitle">CAM 19 &bull; Test 3.2 &bull; The Global Importance of Wetlands &bull; Part B &bull; N / V / Adj</p>
+    </header>
+
+    <!-- ========== SCORE PANEL ========== -->
+    <div class="score-panel">
+        <div class="score-item">
+            <span class="score-label">Matched</span>
+            <span class="score-value" id="matched-count">0 / 21</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Mistakes</span>
+            <span class="score-value" id="mistakes">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Time</span>
+            <span class="score-value" id="timer">00:00</span>
+        </div>
+    </div>
+
+    <!-- ========== BUTTONS ========== -->
+    <div class="btn-container">
+        <button class="btn btn-primary" onclick="gameStarted=true; initGame()">🔄 New Game</button>
+    </div>
+
+    <!-- ========== GAME AREA (2 columns) ========== -->
+    <div class="game-area" id="game-area">
+
+        <!-- LEFT: Audio Zone -->
+        <div class="audio-zone">
+            <p class="audio-prompt" id="audio-prompt">
+                Press <strong>New Game</strong> to start!
+            </p>
+            <button class="audio-play-btn" id="audio-play-btn" onclick="replayCurrentAudio()">
+                <span class="play-icon">🔊</span>
+                <span class="play-label">Play</span>
+            </button>
+            <div class="drop-zone" id="drop-zone">
+                <span class="drop-hint">Drop the word here</span>
+            </div>
+        </div>
+
+        <!-- RIGHT: Word Cards -->
+        <div class="word-zone" id="word-zone">
+            <!-- 21 word cards rendered by game.js -->
+        </div>
+
+    </div>
+
+    <!-- ========== WIN MODAL ========== -->
+    <div class="modal-overlay" id="win-modal">
+        <div class="modal-box">
+            <div class="trophy">🏆</div>
+            <h2>Excellent!</h2>
+            <div class="stats" id="modal-stats"></div>
+            <button class="btn btn-accent" onclick="initGame()">🔄 Play Again</button>
+        </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="game-footer">
+        IELTS Reading &mdash; CAM 19 Test 3.2: The Global Importance of Wetlands &mdash; Part B
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script src="data.js"></script>
+    <script src="game.js"></script>
+
+</body>
+</html>

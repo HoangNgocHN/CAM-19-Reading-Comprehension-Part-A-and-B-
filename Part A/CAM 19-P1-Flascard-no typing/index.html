@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+  FILE: index.html  —  KHUNG HTML
+  ════════════════════════════════════════════════════════
+  Nhiệm vụ: Cấu trúc HTML của trang. Chỉ chứa thẻ gốc
+            <div id="app"> — toàn bộ UI được render bởi
+            script.js vào trong thẻ này.
+
+  Thứ tự load script BẮT BUỘC:
+    1. data.js   ← dữ liệu (phải load TRƯỚC)
+    2. script.js ← logic (dùng dữ liệu từ file trên)
+
+  Khi đổi bài học: không cần sửa file này.
+  ════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAM 19 · Wetlands — Flashcards</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

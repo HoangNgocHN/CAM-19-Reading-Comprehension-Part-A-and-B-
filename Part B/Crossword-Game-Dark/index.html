@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Crossword - CAM 19 - The Global Importance of Wetlands (Para 2)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================================================================
+     SVG BACKGROUND — Layered Mountain Landscape with Aurora
+     5 mountain depth layers + stars + aurora + pine trees
+     =================================================================== -->
+<div class="bg-scene">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <!-- Sky gradient -->
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#070B24"/>
+                <stop offset="25%"  stop-color="#0D1640"/>
+                <stop offset="50%"  stop-color="#12204A"/>
+                <stop offset="75%"  stop-color="#162447"/>
+                <stop offset="100%" stop-color="#1B2A4A"/>
+            </linearGradient>
+            <!-- Aurora gradients -->
+            <linearGradient id="aurora1" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="rgba(52,211,153,0)"/>
+                <stop offset="25%"  stop-color="rgba(52,211,153,0.12)"/>
+                <stop offset="50%"  stop-color="rgba(139,92,246,0.10)"/>
+                <stop offset="75%"  stop-color="rgba(52,211,153,0.08)"/>
+                <stop offset="100%" stop-color="rgba(139,92,246,0)"/>
+            </linearGradient>
+            <linearGradient id="aurora2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="rgba(139,92,246,0)"/>
+                <stop offset="30%"  stop-color="rgba(236,72,153,0.07)"/>
+                <stop offset="60%"  stop-color="rgba(52,211,153,0.09)"/>
+                <stop offset="100%" stop-color="rgba(139,92,246,0)"/>
+            </linearGradient>
+            <!-- Mountain fills -->
+            <linearGradient id="m5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a1c52"/><stop offset="100%" stop-color="#151840"/>
+            </linearGradient>
+            <linearGradient id="m4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#141838"/><stop offset="100%" stop-color="#101430"/>
+            </linearGradient>
+            <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0f1230"/><stop offset="100%" stop-color="#0b0e26"/>
+            </linearGradient>
+            <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0a0d22"/><stop offset="100%" stop-color="#070a1c"/>
+            </linearGradient>
+            <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#060918"/><stop offset="100%" stop-color="#040712"/>
+            </linearGradient>
+
+            <!-- Sparkle glow filter -->
+            <filter id="star-glow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+                <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+            <filter id="star-glow-lg" x="-150%" y="-150%" width="400%" height="400%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur"/>
+                <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+
+            <!-- 4-pointed sparkle symbol (diamond star) -->
+            <symbol id="sparkle4" viewBox="-10 -10 20 20">
+                <path d="M0,-10 C1,-3 3,-1 10,0 C3,1 1,3 0,10 C-1,3 -3,1 -10,0 C-3,-1 -1,-3 0,-10 Z" fill="currentColor"/>
+            </symbol>
+            <!-- 6-pointed sparkle (cross-star with thin rays) -->
+            <symbol id="sparkle6" viewBox="-12 -12 24 24">
+                <path d="M0,-12 C0.5,-2 2,-0.5 12,0 C2,0.5 0.5,2 0,12 C-0.5,2 -2,0.5 -12,0 C-2,-0.5 -0.5,-2 0,-12 Z" fill="currentColor"/>
+                <path d="M0,-8 L0,8 M-8,0 L8,0" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+            </symbol>
+        </defs>
+
+        <!-- Sky -->
+        <rect width="1440" height="900" fill="url(#sky)"/>
+
+        <!-- ★ LAYER 1: Tiny background dots (distant stars) ★ -->
+        <g opacity="0.6">
+            <circle cx="32"  cy="18"  r="0.6" fill="#C7D2FE"/>
+            <circle cx="98"  cy="55"  r="0.5" fill="#fff"/>
+            <circle cx="175" cy="12"  r="0.7" fill="#E0E7FF"/>
+            <circle cx="230" cy="88"  r="0.5" fill="#fff"/>
+            <circle cx="310" cy="42"  r="0.6" fill="#C7D2FE"/>
+            <circle cx="385" cy="15"  r="0.5" fill="#fff"/>
+            <circle cx="445" cy="72"  r="0.7" fill="#E0E7FF"/>
+            <circle cx="520" cy="30"  r="0.5" fill="#fff"/>
+            <circle cx="590" cy="98"  r="0.6" fill="#C7D2FE"/>
+            <circle cx="670" cy="18"  r="0.5" fill="#fff"/>
+            <circle cx="745" cy="65"  r="0.6" fill="#E0E7FF"/>
+            <circle cx="815" cy="38"  r="0.5" fill="#fff"/>
+            <circle cx="900" cy="82"  r="0.7" fill="#C7D2FE"/>
+            <circle cx="975" cy="25"  r="0.5" fill="#fff"/>
+            <circle cx="1045" cy="60" r="0.6" fill="#E0E7FF"/>
+            <circle cx="1115" cy="92" r="0.5" fill="#fff"/>
+            <circle cx="1195" cy="15" r="0.7" fill="#C7D2FE"/>
+            <circle cx="1275" cy="78" r="0.5" fill="#fff"/>
+            <circle cx="1345" cy="35" r="0.6" fill="#E0E7FF"/>
+            <circle cx="1415" cy="55" r="0.5" fill="#fff"/>
+            <circle cx="55"  cy="140" r="0.5" fill="#fff"/>
+            <circle cx="135" cy="165" r="0.6" fill="#C7D2FE"/>
+            <circle cx="275" cy="128" r="0.5" fill="#fff"/>
+            <circle cx="365" cy="175" r="0.7" fill="#E0E7FF"/>
+            <circle cx="465" cy="145" r="0.5" fill="#fff"/>
+            <circle cx="555" cy="180" r="0.6" fill="#C7D2FE"/>
+            <circle cx="655" cy="155" r="0.5" fill="#fff"/>
+            <circle cx="755" cy="190" r="0.5" fill="#E0E7FF"/>
+            <circle cx="865" cy="135" r="0.6" fill="#fff"/>
+            <circle cx="965" cy="175" r="0.5" fill="#C7D2FE"/>
+            <circle cx="1075" cy="148" r="0.7" fill="#fff"/>
+            <circle cx="1180" cy="185" r="0.5" fill="#E0E7FF"/>
+            <circle cx="1285" cy="160" r="0.6" fill="#fff"/>
+            <circle cx="1390" cy="140" r="0.5" fill="#C7D2FE"/>
+            <circle cx="110" cy="240" r="0.5" fill="#fff"/>
+            <circle cx="335" cy="225" r="0.6" fill="#E0E7FF"/>
+            <circle cx="530" cy="250" r="0.5" fill="#fff"/>
+            <circle cx="720" cy="235" r="0.5" fill="#C7D2FE"/>
+            <circle cx="910" cy="260" r="0.6" fill="#fff"/>
+            <circle cx="1130" cy="240" r="0.5" fill="#E0E7FF"/>
+            <circle cx="1320" cy="255" r="0.5" fill="#fff"/>
+        </g>
+
+        <!-- ★ LAYER 2: Medium twinkling dots ★ -->
+        <g>
+            <circle class="star" cx="85"   cy="35"  r="1.2" fill="#fff"    style="--dur:2.8s;--min-o:0.2;--max-o:0.8"/>
+            <circle class="star" cx="210"  cy="72"  r="1.5" fill="#fff"    style="--dur:4.2s;--min-o:0.3;--max-o:0.9"/>
+            <circle class="star" cx="340"  cy="28"  r="1"   fill="#E0E7FF" style="--dur:3.5s;--min-o:0.2;--max-o:0.7"/>
+            <circle class="star" cx="420"  cy="95"  r="1.3" fill="#fff"    style="--dur:2.4s;--min-o:0.3;--max-o:0.85"/>
+            <circle class="star" cx="560"  cy="42"  r="1.4" fill="#E0E7FF" style="--dur:5.0s;--min-o:0.2;--max-o:0.8"/>
+            <circle class="star" cx="650"  cy="110" r="1"   fill="#FDE68A" style="--dur:3.1s;--min-o:0.25;--max-o:0.7"/>
+            <circle class="star" cx="880"  cy="22"  r="1.2" fill="#E0E7FF" style="--dur:2.6s;--min-o:0.2;--max-o:0.65"/>
+            <circle class="star" cx="1020" cy="80"  r="1.4" fill="#fff"    style="--dur:3.7s;--min-o:0.25;--max-o:0.85"/>
+            <circle class="star" cx="1140" cy="38"  r="1.1" fill="#FDE68A" style="--dur:4.5s;--min-o:0.2;--max-o:0.7"/>
+            <circle class="star" cx="1260" cy="65"  r="1.5" fill="#fff"    style="--dur:3.0s;--min-o:0.3;--max-o:0.9"/>
+            <circle class="star" cx="1370" cy="95"  r="1"   fill="#E0E7FF" style="--dur:5.2s;--min-o:0.2;--max-o:0.7"/>
+            <circle class="star" cx="150"  cy="130" r="1"   fill="#fff"    style="--dur:3.8s;--min-o:0.2;--max-o:0.6"/>
+            <circle class="star" cx="300"  cy="155" r="1.3" fill="#fff"    style="--dur:2.9s;--min-o:0.25;--max-o:0.8"/>
+            <circle class="star" cx="490"  cy="170" r="0.9" fill="#FDE68A" style="--dur:4.1s;--min-o:0.2;--max-o:0.55"/>
+            <circle class="star" cx="700"  cy="140" r="1.4" fill="#fff"    style="--dur:3.3s;--min-o:0.3;--max-o:0.85"/>
+            <circle class="star" cx="950"  cy="160" r="1.1" fill="#E0E7FF" style="--dur:4.7s;--min-o:0.2;--max-o:0.7"/>
+            <circle class="star" cx="1100" cy="130" r="1.2" fill="#fff"    style="--dur:2.5s;--min-o:0.25;--max-o:0.8"/>
+            <circle class="star" cx="1300" cy="148" r="0.8" fill="#E0E7FF" style="--dur:5.5s;--min-o:0.15;--max-o:0.55"/>
+            <circle class="star" cx="50"   cy="200" r="1.3" fill="#fff"    style="--dur:3.6s;--min-o:0.25;--max-o:0.7"/>
+            <circle class="star" cx="250"  cy="210" r="1"   fill="#FDE68A" style="--dur:4.0s;--min-o:0.2;--max-o:0.6"/>
+            <circle class="star" cx="600"  cy="195" r="1.5" fill="#fff"    style="--dur:3.2s;--min-o:0.3;--max-o:0.9"/>
+            <circle class="star" cx="850"  cy="220" r="1.1" fill="#E0E7FF" style="--dur:4.4s;--min-o:0.2;--max-o:0.65"/>
+            <circle class="star" cx="1050" cy="200" r="1"   fill="#fff"    style="--dur:3.9s;--min-o:0.25;--max-o:0.8"/>
+            <circle class="star" cx="1400" cy="185" r="1.2" fill="#fff"    style="--dur:2.7s;--min-o:0.3;--max-o:0.85"/>
+        </g>
+
+        <!-- ★ LAYER 3: Bright sparkle stars (4-pointed, with glow) ★ -->
+        <g>
+            <!-- Large sparkles — bright focal stars -->
+            <use href="#sparkle4" x="770"  y="48"  width="14" height="14" color="#fff"    filter="url(#star-glow-lg)" class="sparkle" style="--dur:3.5s;--min-o:0.3;--max-o:1;--rot:15deg"/>
+            <use href="#sparkle4" x="195"  y="60"  width="10" height="10" color="#E0E7FF" filter="url(#star-glow)"    class="sparkle" style="--dur:4.0s;--min-o:0.2;--max-o:0.9;--rot:-10deg"/>
+            <use href="#sparkle4" x="1185" y="32"  width="12" height="12" color="#FDE68A" filter="url(#star-glow-lg)" class="sparkle" style="--dur:5.0s;--min-o:0.25;--max-o:1;--rot:22deg"/>
+            <use href="#sparkle4" x="480"  y="25"  width="9"  height="9"  color="#fff"    filter="url(#star-glow)"    class="sparkle" style="--dur:3.2s;--min-o:0.2;--max-o:0.85;--rot:-5deg"/>
+            <use href="#sparkle4" x="1030" y="55"  width="11" height="11" color="#E0E7FF" filter="url(#star-glow)"    class="sparkle" style="--dur:4.6s;--min-o:0.2;--max-o:0.9;--rot:30deg"/>
+
+            <!-- Medium sparkles scattered across sky -->
+            <use href="#sparkle6" x="120"  y="18"  width="7"  height="7"  color="#fff"    filter="url(#star-glow)" class="sparkle" style="--dur:3.8s;--min-o:0.15;--max-o:0.75;--rot:0deg"/>
+            <use href="#sparkle6" x="420"  y="108" width="8"  height="8"  color="#FDE68A" filter="url(#star-glow)" class="sparkle" style="--dur:4.3s;--min-o:0.2;--max-o:0.8;--rot:45deg"/>
+            <use href="#sparkle6" x="680"  y="85"  width="6"  height="6"  color="#E0E7FF" filter="url(#star-glow)" class="sparkle" style="--dur:5.2s;--min-o:0.15;--max-o:0.7;--rot:-20deg"/>
+            <use href="#sparkle6" x="920"  y="42"  width="7"  height="7"  color="#fff"    filter="url(#star-glow)" class="sparkle" style="--dur:3.0s;--min-o:0.2;--max-o:0.85;--rot:12deg"/>
+            <use href="#sparkle6" x="1340" y="70"  width="8"  height="8"  color="#FDE68A" filter="url(#star-glow)" class="sparkle" style="--dur:4.8s;--min-o:0.15;--max-o:0.75;--rot:-35deg"/>
+            <use href="#sparkle6" x="60"   cy="170" width="6" height="6"  color="#fff"    filter="url(#star-glow)" class="sparkle" style="--dur:3.4s;--min-o:0.15;--max-o:0.7;--rot:8deg"/>
+            <use href="#sparkle6" x="350"  y="185" width="7"  height="7"  color="#E0E7FF" filter="url(#star-glow)" class="sparkle" style="--dur:5.5s;--min-o:0.1;--max-o:0.65;--rot:-15deg"/>
+            <use href="#sparkle6" x="800"  y="165" width="6"  height="6"  color="#fff"    filter="url(#star-glow)" class="sparkle" style="--dur:4.1s;--min-o:0.15;--max-o:0.7;--rot:25deg"/>
+            <use href="#sparkle6" x="1150" y="110" width="7"  height="7"  color="#FDE68A" filter="url(#star-glow)" class="sparkle" style="--dur:3.6s;--min-o:0.2;--max-o:0.8;--rot:-8deg"/>
+
+            <!-- Extra bright "hero" sparkle stars (larger, more glow) -->
+            <use href="#sparkle4" x="380"  y="55"  width="16" height="16" color="#fff"    filter="url(#star-glow-lg)" class="sparkle sparkle-hero" style="--dur:6s;--min-o:0.15;--max-o:1;--rot:0deg"/>
+            <use href="#sparkle4" x="1080" y="15"  width="15" height="15" color="#FDE68A" filter="url(#star-glow-lg)" class="sparkle sparkle-hero" style="--dur:7s;--min-o:0.1;--max-o:1;--rot:45deg"/>
+            <use href="#sparkle4" x="720"  y="120" width="13" height="13" color="#E0E7FF" filter="url(#star-glow-lg)" class="sparkle sparkle-hero" style="--dur:5.5s;--min-o:0.15;--max-o:0.95;--rot:-30deg"/>
+        </g>
+
+        <!-- Aurora streaks -->
+        <path class="aurora-path" d="M0,180 Q300,120 600,200 Q900,140 1200,190 Q1400,160 1440,175"
+              stroke="url(#aurora1)" stroke-width="80" fill="none" opacity="0.4"/>
+        <path class="aurora-path" d="M0,240 Q400,190 800,260 Q1100,200 1440,230"
+              stroke="url(#aurora2)" stroke-width="50" fill="none" opacity="0.3"
+              style="animation-delay: -6s; animation-duration: 22s"/>
+
+        <!-- Mountain Layer 5 (farthest — faintest) -->
+        <path d="M0,520 C180,440 360,490 540,450 C720,410 900,470 1080,420 C1200,440 1350,410 1440,430 L1440,900 L0,900 Z"
+              fill="url(#m5)" opacity="0.35"/>
+
+        <!-- Mountain Layer 4 -->
+        <path d="M0,560 C200,480 400,530 600,485 C800,440 1000,510 1200,460 C1340,480 1440,465 1440,465 L1440,900 L0,900 Z"
+              fill="url(#m4)" opacity="0.5"/>
+
+        <!-- Mountain Layer 3 -->
+        <path d="M0,610 C220,540 460,580 680,535 C900,495 1100,555 1300,510 C1400,530 1440,515 1440,515 L1440,900 L0,900 Z"
+              fill="url(#m3)" opacity="0.65"/>
+
+        <!-- Mountain Layer 2 -->
+        <path d="M0,670 C280,600 560,645 840,595 C1050,565 1250,615 1440,580 L1440,900 L0,900 Z"
+              fill="url(#m2)" opacity="0.8"/>
+
+        <!-- Mountain Layer 1 (nearest — darkest) -->
+        <path d="M0,730 C300,670 600,710 900,660 C1100,640 1300,680 1440,650 L1440,900 L0,900 Z"
+              fill="url(#m1)" opacity="0.92"/>
+
+        <!-- Pine trees silhouettes on nearest ridge -->
+        <g fill="#040712" opacity="0.85">
+            <!-- Tree = triangle + small trunk -->
+            <path d="M80,718 l-6,0 l-6,-18 l6,-14 l6,14 l-6,18 Z"/>
+            <path d="M140,705 l-7,0 l-7,-20 l7,-16 l7,16 l-7,20 Z"/>
+            <path d="M195,715 l-5,0 l-5,-15 l5,-12 l5,12 l-5,15 Z"/>
+            <path d="M310,695 l-8,0 l-8,-22 l8,-18 l8,18 l-8,22 Z"/>
+            <path d="M380,710 l-6,0 l-6,-16 l6,-13 l6,13 l-6,16 Z"/>
+            <path d="M500,680 l-9,0 l-9,-25 l9,-20 l9,20 l-9,25 Z"/>
+            <path d="M570,700 l-5,0 l-5,-14 l5,-11 l5,11 l-5,14 Z"/>
+            <path d="M680,670 l-8,0 l-8,-22 l8,-18 l8,18 l-8,22 Z"/>
+            <path d="M760,690 l-6,0 l-6,-17 l6,-14 l6,14 l-6,17 Z"/>
+            <path d="M880,660 l-10,0 l-10,-28 l10,-22 l10,22 l-10,28 Z"/>
+            <path d="M960,680 l-6,0 l-6,-16 l6,-13 l6,13 l-6,16 Z"/>
+            <path d="M1060,655 l-7,0 l-7,-20 l7,-16 l7,16 l-7,20 Z"/>
+            <path d="M1150,670 l-5,0 l-5,-15 l5,-12 l5,12 l-5,15 Z"/>
+            <path d="M1260,680 l-8,0 l-8,-22 l8,-17 l8,17 l-8,22 Z"/>
+            <path d="M1350,665 l-6,0 l-6,-17 l6,-14 l6,14 l-6,17 Z"/>
+        </g>
+
+        <!-- Ground (darkest) -->
+        <rect y="790" width="1440" height="110" fill="#030610"/>
+
+        <!-- Subtle ground mist -->
+        <rect y="770" width="1440" height="40" fill="url(#m1)" opacity="0.3"/>
+    </svg>
+</div>
+
+<!-- ===================================================================
+     GAME CONTENT
+     =================================================================== -->
+<div class="game-container">
+
+    <!-- Header -->
+    <header class="game-header">
+        <h1 class="game-title">Crossword</h1>
+        <p class="game-subtitle">CAM 19 &bull; The Global Importance of Wetlands &bull; Paragraph 2 &bull; Nouns, Verbs &amp; Adjectives</p>
+    </header>
+
+    <!-- Score Panel -->
+    <div class="score-panel">
+        <div class="score-item">
+            <span class="score-label">Placed</span>
+            <span class="score-value" id="placed-count">0 / 22</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Revealed</span>
+            <span class="score-value" id="revealed-count">0</span>
+        </div>
+        <div class="score-item">
+            <span class="score-label">Time</span>
+            <span class="score-value" id="timer">00:00</span>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-row">
+        <button class="btn btn-primary" onclick="initGame()">New Game</button>
+        <button class="btn btn-check" onclick="checkAll()">Check All</button>
+        <button class="btn btn-reveal" onclick="revealWord()">Reveal Word</button>
+        <button class="btn btn-clear" onclick="clearWord()">Clear Word</button>
+    </div>
+
+    <!-- Crossword Grid -->
+    <div class="grid-wrapper">
+        <div class="crossword-grid" id="crossword-grid" tabindex="0"></div>
+    </div>
+
+    <!-- Clues -->
+    <div class="clues-container">
+        <div class="clues-section">
+            <div class="clues-title across-title">Across &rarr;</div>
+            <div id="clues-across"></div>
+        </div>
+        <div class="clues-section">
+            <div class="clues-title down-title">Down &darr;</div>
+            <div id="clues-down"></div>
+        </div>
+    </div>
+
+    <!-- Extra clues (words that didn't fit) -->
+    <div class="clues-section" id="extra-section" style="display:none; max-width:900px; width:100%; margin-bottom:16px;">
+        <div class="clues-title extra-title">Extra Vocabulary</div>
+        <div id="clues-extra"></div>
+    </div>
+
+    <!-- On-Screen Keyboard -->
+    <div class="keyboard" id="keyboard">
+        <div class="kb-row">
+            <button class="kb-key" data-key="Q">Q</button>
+            <button class="kb-key" data-key="W">W</button>
+            <button class="kb-key" data-key="E">E</button>
+            <button class="kb-key" data-key="R">R</button>
+            <button class="kb-key" data-key="T">T</button>
+            <button class="kb-key" data-key="Y">Y</button>
+            <button class="kb-key" data-key="U">U</button>
+            <button class="kb-key" data-key="I">I</button>
+            <button class="kb-key" data-key="O">O</button>
+            <button class="kb-key" data-key="P">P</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key" data-key="A">A</button>
+            <button class="kb-key" data-key="S">S</button>
+            <button class="kb-key" data-key="D">D</button>
+            <button class="kb-key" data-key="F">F</button>
+            <button class="kb-key" data-key="G">G</button>
+            <button class="kb-key" data-key="H">H</button>
+            <button class="kb-key" data-key="J">J</button>
+            <button class="kb-key" data-key="K">K</button>
+            <button class="kb-key" data-key="L">L</button>
+        </div>
+        <div class="kb-row">
+            <button class="kb-key kb-wide" data-key="BACK">&#9003;</button>
+            <button class="kb-key" data-key="Z">Z</button>
+            <button class="kb-key" data-key="X">X</button>
+            <button class="kb-key" data-key="C">C</button>
+            <button class="kb-key" data-key="V">V</button>
+            <button class="kb-key" data-key="B">B</button>
+            <button class="kb-key" data-key="N">N</button>
+            <button class="kb-key" data-key="M">M</button>
+            <button class="kb-key kb-enter" data-key="ENTER">&#9166;</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Win Modal -->
+<div class="modal-overlay" id="win-modal">
+    <div class="modal-box">
+        <div class="modal-trophy">&#127942;</div>
+        <div class="modal-title">Brilliant!</div>
+        <div class="modal-stars" id="modal-stars"></div>
+        <div class="modal-stats" id="modal-stats"></div>
+        <button class="btn btn-play-again" onclick="initGame()">Play Again</button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="game-footer">
+    CAM 19 &mdash; The Global Importance of Wetlands &mdash; Para 2 Vocabulary
+</footer>
+
+<!-- Scripts -->
+<script src="data.js"></script>
+<script src="game.js"></script>
+
+</body>
+</html>

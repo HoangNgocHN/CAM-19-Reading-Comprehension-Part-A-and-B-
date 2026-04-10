@@ -1,0 +1,673 @@
+/* ═══════════════════════════════════════════════════
+   FILE: style.css  —  GIAO DIỆN FLASHCARD
+   ═══════════════════════════════════════════════════
+   Nhiệm vụ: Toàn bộ style của ứng dụng flashcard.
+             Không chứa dữ liệu hay logic.
+
+   Chủ đề màu: "The Global Importance of Wetlands"
+     Xanh rêu (mangrove) · Nền đất ấm
+
+   ĐỂ ĐỔI MÀU: chỉ sửa phần :root bên dưới.
+
+   Cấu trúc file:
+     1. CSS Variables (màu sắc & hằng số thiết kế)
+     2. Reset & Body
+     3. Layout chính (#app)
+     4. Header
+     5. Tabs (bộ lọc danh mục)
+     6. Stats & Progress bar
+     7. Card flip (3D flip effect)
+     8. Mặt trước thẻ (Front face)
+     9. Mặt sau thẻ (Back face)
+    10. Animation loa đang phát (speaking pulse)
+    11. Nút đánh giá Know / Again
+    12. Nút điều hướng Prev / Next
+    13. Màn hình hoàn thành (Complete screen)
+═══════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────
+   1. CSS CUSTOM PROPERTIES (VARIABLES)
+   Khai báo một lần ở :root, dùng lại khắp nơi
+   bằng cú pháp var(--tên-biến).
+   Thay màu ở đây là thay toàn bộ giao diện.
+───────────────────────────────────────────────── */
+:root {
+  --bg:         #f5f0e8;   /* Màu nền trang */
+  --surface:    #fffdf8;   /* Màu nền card/chip */
+  --card-front: #2e6e52;   /* Xanh rêu mangrove – mặt trước thẻ */
+  --accent:     #e86c3a;   /* Cam – accent chính */
+  --accent2:    #2e8b6e;   /* Xanh lá – "Got it!" */
+  --accent3:    #c0392b;   /* Đỏ – "Study again" */
+  --muted:      #8a8070;   /* Màu chữ phụ (xám ấm) */
+  --border:     #ddd8cc;   /* Màu viền */
+  --text:       #1a1a1a;   /* Màu chữ chính */
+  --radius:     18px;      /* Bo góc mặc định */
+}
+
+
+/* ─────────────────────────────────────────────────
+   2. RESET & BODY
+   - Reset margin/padding mặc định của trình duyệt
+   - box-sizing: border-box — padding/border nằm
+     BÊN TRONG chiều rộng, không cộng thêm ra ngoài
+   - Nền trang có 2 lớp gradient trang trí
+───────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+
+  /* Hai gradient hình tròn nhạt ở 2 góc trang trí nền */
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(232,108,58,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(46,139,110,0.08) 0%, transparent 40%);
+}
+
+
+/* ─────────────────────────────────────────────────
+   3. LAYOUT CHÍNH
+   Giới hạn chiều rộng tối đa 680px, căn giữa trang,
+   có padding trên/dưới để nội dung không dính cạnh.
+───────────────────────────────────────────────── */
+#app {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 16px 80px;
+}
+
+
+/* ─────────────────────────────────────────────────
+   4. HEADER
+   Phần tiêu đề trên cùng: nhãn Unit, tên bài, phụ đề.
+───────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* Nhãn "UNIT 8 · PARAGRAPH 1" — pill shape (border-radius 99px) */
+.unit-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+
+/* Tiêu đề lớn — dùng clamp() để co giãn theo màn hình:
+   min 24px, ưu tiên 6vw, tối đa 38px */
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 6vw, 38px);
+  color: var(--card-front);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+
+/* ─────────────────────────────────────────────────
+   5. TABS – BỘ LỌC DANH MỤC
+   Hàng nút: All / Nouns / Verbs / Adjectives
+───────────────────────────────────────────────── */
+.cat-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;         /* Xuống hàng trên màn hình nhỏ */
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.cat-btn {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 99px;
+  padding: 7px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s;     /* Hiệu ứng hover mượt */
+}
+
+.cat-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Tab đang được chọn — nền tối, chữ trắng */
+.cat-btn.active {
+  background: var(--card-front);
+  border-color: var(--card-front);
+  color: #fff;
+}
+
+
+/* ─────────────────────────────────────────────────
+   6. STATS CHIPS & PROGRESS BAR
+───────────────────────────────────────────────── */
+
+/* Hàng 3 chip thống kê: cards / known / review */
+.stats-strip {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.stat-chip span:first-child { font-size: 15px; }  /* Emoji icon */
+.stat-chip .val { color: var(--text); font-weight: 700; } /* Số đậm hơn */
+
+/* Thanh tiến độ: label | thanh | số x/y */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.prog-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.prog-bar {
+  flex: 1;                 /* Thanh co giãn chiếm không gian còn lại */
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+/* Phần đã học — gradient và transition mượt */
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 99px;
+  transition: width .5s cubic-bezier(.4, 0, .2, 1);
+}
+
+.prog-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--card-front);
+}
+
+
+/* ─────────────────────────────────────────────────
+   7. CARD FLIP – HIỆU ỨNG LẬT THẺ 3D
+   Kỹ thuật: perspective + transform-style: preserve-3d
+   + rotateY(180deg) + backface-visibility: hidden
+───────────────────────────────────────────────── */
+
+/* .card-scene: "sân khấu" chứa thẻ — khai báo perspective
+   để tạo chiều sâu 3D */
+.card-scene {
+  perspective: 1200px;
+  height: 300px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: none;       /* Không bôi đen chữ khi click */
+}
+
+/* .card-inner: phần tử thực sự xoay —
+   preserve-3d giữ 2 mặt con trong không gian 3D */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .55s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Khi thêm class .flipped → xoay 180° quanh trục Y */
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Thuộc tính chung cho cả 2 mặt thẻ */
+.card-face {
+  position: absolute;
+  inset: 0;                /* Tương đương top/right/bottom/left: 0 */
+  border-radius: var(--radius);
+  backface-visibility: hidden;          /* Ẩn mặt sau khi đang hiện mặt trước */
+  -webkit-backface-visibility: hidden;  /* Tiền tố cho Safari */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+
+
+/* ─────────────────────────────────────────────────
+   8. MẶT TRƯỚC THẺ (FRONT FACE)
+   Nền xanh navy, chữ trắng
+   Hiển thị: nhãn loại từ, số thứ tự, từ vựng, phiên âm, nút loa
+───────────────────────────────────────────────── */
+.card-front-face {
+  background: var(--card-front);
+  color: #fff;
+}
+
+/* Nhãn loại từ – góc trên trái */
+.card-type-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+
+/* Số thứ tự "x / y" – góc trên phải */
+.card-num {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Từ vựng chính – font serif lớn */
+.card-word {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 7vw, 44px);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+
+/* Phiên âm IPA – chữ nghiêng, màu mờ */
+.card-phonetic {
+  color: rgba(255,255,255,0.55);
+  font-size: 17px;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+/* Nút loa mặt trước — hình tròn, nằm inline (không absolute) */
+.speak-front-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+
+.speak-front-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+
+/* SVG bên trong nút — pointer-events:none ngăn SVG
+   "chặn" sự kiện click của nút cha */
+.speak-front-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+/* Gợi ý lật thẻ – đáy trung tâm */
+.flip-hint {
+  position: absolute;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255,255,255,0.32);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.flip-hint svg {
+  width: 13px;
+  height: 13px;
+  fill: rgba(255,255,255,0.32);
+}
+
+
+/* ─────────────────────────────────────────────────
+   9. MẶT SAU THẺ (BACK FACE)
+   Nền sáng, hiển thị câu ví dụ và nút loa
+   Quan trọng: rotateY(180deg) — mặt sau bị lật ngược
+   sẵn, khi card-inner xoay 180° thì mặt sau trông thẳng
+───────────────────────────────────────────────── */
+.card-back-face {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  transform: rotateY(180deg); /* Lật ngược sẵn để bù trừ */
+  color: var(--text);
+}
+
+/* Khung câu ví dụ — viền trái màu accent */
+.back-example {
+  background: #f0ede6;
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 17px;
+  color: #333;
+  line-height: 1.85;
+  text-align: left;
+  font-style: italic;
+  width: 100%;
+}
+
+/* Từ được highlight trong câu ví dụ — <strong> */
+.back-example strong {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 19px;
+}
+
+/* Nút loa mặt sau — góc dưới phải, vị trí absolute */
+.speak-back-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.speak-back-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.speak-back-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+/* Gợi ý lật lại – góc dưới trái mặt sau */
+.back-flip-hint {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  color: var(--muted);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.back-flip-hint svg {
+  width: 13px;
+  height: 13px;
+  fill: var(--muted);
+}
+
+
+/* ─────────────────────────────────────────────────
+   10. ANIMATION – NÚT LOA ĐANG PHÁT (.speaking)
+   Hiệu ứng "pulse" (vòng sáng lan rộng rồi mờ dần)
+   Có 2 phiên bản: trên nền tối (mặt trước) và nền sáng (mặt sau)
+───────────────────────────────────────────────── */
+
+/* Mặt sau – vòng sáng màu accent cam */
+.speaking {
+  animation: pulse-s .65s ease infinite alternate;
+}
+
+@keyframes pulse-s {
+  from { box-shadow: 0 0 0 0   rgba(232,108,58,0.55); }
+  to   { box-shadow: 0 0 0 10px rgba(232,108,58,0); }
+}
+
+/* Mặt trước – vòng sáng màu trắng */
+.speak-front-btn.speaking {
+  animation: pulse-f .65s ease infinite alternate;
+}
+
+@keyframes pulse-f {
+  from { box-shadow: 0 0 0 0   rgba(255,255,255,0.5); }
+  to   { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+}
+
+
+/* ─────────────────────────────────────────────────
+   11. NÚT ĐÁNH GIÁ – KNOW / AGAIN
+   Xuất hiện sau khi lật thẻ xem câu ví dụ
+───────────────────────────────────────────────── */
+.rate-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.rate-btn {
+  flex: 1;
+  max-width: 160px;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* "✅ Got it!" — nền xanh lá */
+.rate-btn.know {
+  background: var(--accent2);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(46,139,110,0.3);
+}
+
+.rate-btn.know:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46,139,110,0.4);
+}
+
+/* "🔁 Study again" — viền đỏ, nền trắng */
+.rate-btn.again {
+  background: #fff;
+  color: var(--accent3);
+  border: 2px solid var(--accent3);
+}
+
+.rate-btn.again:hover {
+  background: #fdf0ef;
+  transform: translateY(-2px);
+}
+
+
+/* ─────────────────────────────────────────────────
+   12. NÚT ĐIỀU HƯỚNG – PREV / NEXT
+───────────────────────────────────────────────── */
+.nav-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.nav-btn {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 22px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--card-front);
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+  border-color: var(--card-front);
+  background: var(--card-front);
+  color: #fff;
+}
+
+/* Nút bị vô hiệu hóa (đang ở đầu hoặc cuối bộ) */
+.nav-btn:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+
+/* ─────────────────────────────────────────────────
+   13. MÀN HÌNH HOÀN THÀNH (COMPLETE SCREEN)
+   Hiển thị khi đã đi hết bộ thẻ:
+   icon, tiêu đề, thông điệp, lưới kết quả, nút hành động
+───────────────────────────────────────────────── */
+
+/* Animation trượt lên khi màn hình complete xuất hiện */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.complete-card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px 28px;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  animation: slideUp .5s ease;
+}
+
+.complete-icon  { font-size: 72px; display: block; margin-bottom: 16px; }
+
+.complete-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 5vw, 32px);
+  color: var(--card-front);
+  margin-bottom: 8px;
+}
+
+.complete-sub {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+/* Lưới 2 cột: Known | Review */
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.result-box {
+  background: #f0ede6;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.result-box .rb-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.result-box .rb-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.result-box.green  .rb-val { color: var(--accent2); }
+.result-box.orange .rb-val { color: var(--accent); }
+
+/* Hàng nút hành động: Review / Shuffle / All words */
+.action-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+/* Nút chính — nền navy */
+.action-btn.primary { background: var(--card-front); color: #fff; }
+.action-btn.primary:hover { transform: translateY(-2px); }
+
+/* Nút phụ — viền mỏng */
+.action-btn.secondary { background: var(--surface); color: var(--card-front); border: 2px solid var(--border); }
+.action-btn.secondary:hover { border-color: var(--card-front); }
